@@ -105,7 +105,7 @@ namespace Verophyle.Regexp.Node
             var dot_info = type.GetMember("DOT", BindingFlags.Static | BindingFlags.NonPublic);
             if (dot_info != null && dot_info.Length > 0)
             {
-                if (dot_info[0].MemberType == MemberTypes.Field)
+                if (dot_info[0] is FieldInfo)
                     Input = (TInputClass)((FieldInfo)dot_info[0]).GetValue(null);
             }
         }

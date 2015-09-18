@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 using IronMeta.Utils;
 
@@ -229,7 +230,7 @@ namespace IronMeta.Matcher
         public MatchItem(Action<MatchState<TInput, TResult>, int, IEnumerable<MatchItem<TInput, TResult>>> p)
         {
             Production = p;
-            ProductionName = p.Method.Name;
+            ProductionName = RuntimeReflectionExtensions.GetMethodInfo(p).Name;
         }
 
         /// <summary>
@@ -241,7 +242,7 @@ namespace IronMeta.Matcher
             {
                 if (Production != null)
                 {
-                    id = string.Format("{{ {0} }}", Production.Method.Name);
+                    id = string.Format("{{ {0} }}", RuntimeReflectionExtensions.GetMethodInfo(Production).Name);
                 }
                 else
                 {

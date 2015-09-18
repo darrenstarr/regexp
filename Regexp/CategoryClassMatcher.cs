@@ -38,7 +38,7 @@ namespace Verophyle.Regexp
                 yield return result;
 
             CategoryClass cc;
-            if (category_classes.TryGetValue(char.GetUnicodeCategory(input), out cc))
+            if (category_classes.TryGetValue(CharUnicodeInfo.GetUnicodeCategory(input), out cc))
                 yield return cc;
 
             if (dot_class != null)

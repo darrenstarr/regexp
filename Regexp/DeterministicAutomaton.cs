@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 namespace Verophyle.Regexp
@@ -401,7 +402,8 @@ namespace Verophyle.Regexp
             {
                 var type = set.GetType();
                 int depth = 0;
-                while ((type = type.BaseType) != null)
+                
+                while ((type = IntrospectionExtensions.GetTypeInfo(type).BaseType) != null)
                     ++depth;
                 if (depth > max_depth)
                 {

@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 
@@ -82,7 +83,8 @@ namespace IronMeta.Matcher
                 if (Terminals == null)
                     Terminals = new HashSet<string>();
 
-                result = _MemoCall(memo, production.Method.Name, 0, production, null);
+                var methodInfo = RuntimeReflectionExtensions.GetMethodInfo(production);
+                result = _MemoCall(memo, methodInfo.Name, 0, production, null);
             }
             catch (MatcherException me)
             {
@@ -808,7 +810,7 @@ namespace IronMeta.Matcher
         /// <param name="type">The type in question.</param>
         public static bool IsAnonymousType(this Type type)
         {
-            bool hasCompilerGeneratedAttribute = type.GetCustomAttributes(typeof(CompilerGeneratedAttribute), false).Any();
+            bool hasCompilerGeneratedAttribute = type.GetTypeInfo().GetCustomAttributes(typeof(CompilerGeneratedAttribute), false).Any();
             if (!hasCompilerGeneratedAttribute)
                 return false;
 
